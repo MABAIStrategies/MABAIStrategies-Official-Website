@@ -41,34 +41,37 @@ export function Header() {
           className="rounded-md border border-white/10 px-3 py-1.5 text-sm font-medium text-white/90 transition hover:border-white/30 hover:text-white md:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-nav"
+          aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setIsMobileMenuOpen((open) => !open)}
         >
           {isMobileMenuOpen ? 'Close' : 'Menu'}
         </button>
       </div>
-      {isMobileMenuOpen ? (
-        <div id="mobile-nav" className="border-t border-white/10 md:hidden">
-          <div className="container flex flex-col gap-4 py-4 text-sm font-medium">
-            {siteConfig.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={
-                  pathname === item.href
-                    ? 'text-brand-accent'
-                    : 'text-slate-300 transition hover:text-white'
-                }
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Button href="/contact" size="sm" onClick={() => setIsMobileMenuOpen(false)}>
-              Book a call
-            </Button>
-          </div>
+      <div
+        id="mobile-nav"
+        className={`border-t border-white/10 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="container flex flex-col gap-4 py-4 text-sm font-medium">
+          {siteConfig.nav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={
+                pathname === item.href
+                  ? 'text-brand-accent'
+                  : 'text-slate-300 transition hover:text-white'
+              }
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Button href="/contact" size="sm" onClick={() => setIsMobileMenuOpen(false)}>
+            Book a call
+          </Button>
         </div>
-      ) : null}
+      </div>
     </header>
   );
 }
